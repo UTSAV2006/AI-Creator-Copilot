@@ -8,7 +8,8 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="min-h-screen flex flex-col items-center justify-center text-center">
+      <main className="bg-slate-950 text-white min-h-screen">
+        <section className="min-h-screen flex flex-col items-center justify-center text-center">
         <h1 className="text-6xl font-bold">
           AI Creator Copilot
         </h1>
@@ -22,6 +23,7 @@ export default function Home() {
             Get Started
           </button>
         </Link>
+        </section>
 
       {/* Features Section */}
       <section className="max-w-6xl mx-auto py-20 px-6">
@@ -55,11 +57,10 @@ export default function Home() {
             title="Audience Analyzer"
             description="Detect audience confusion from comments."
           />
-
         </div>
       </section>
 
-      </section>
+      </main>
     </>
   );
 }

@@ -1,68 +1,43 @@
 import Navbar from "../../components/Navbar";
+import StatCard from "../../components/StatCard";
 
 export default function Dashboard() {
   return (
     <>
       <Navbar />
 
-      <main className="p-10">
+      <main className="p-10 bg-slate-950 min-h-screen text-white">
         <h1 className="text-4xl font-bold mb-10">
           Creator Dashboard
         </h1>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <StatCard
+            title="Burnout Risk"
+            value="78%"
+          />
 
-          <div className="border rounded-xl p-6 shadow">
-            <h2 className="text-lg font-semibold">
-              Burnout Risk
-            </h2>
+          <StatCard
+            title="Repurposed Content"
+            value="12"
+          />
 
-            <p className="text-4xl font-bold mt-3 text-red-500">
-              78%
-            </p>
-          </div>
+          <StatCard
+            title="Revival Opportunities"
+            value="5"
+          />
 
-          <div className="border rounded-xl p-6 shadow">
-            <h2 className="text-lg font-semibold">
-              Repurposed Content
-            </h2>
+          <StatCard
+            title="Reality Check Alerts"
+            value="2"
+          />
 
-            <p className="text-4xl font-bold mt-3">
-              12
-            </p>
-          </div>
+          <StatCard
+            title="Audience Confusion"
+            value="67%"
+          />
 
-          <div className="border rounded-xl p-6 shadow">
-            <h2 className="text-lg font-semibold">
-              Revival Opportunities
-            </h2>
-
-            <p className="text-4xl font-bold mt-3">
-              5
-            </p>
-          </div>
-
-          <div className="border rounded-xl p-6 shadow">
-            <h2 className="text-lg font-semibold">
-              Reality Check Alerts
-            </h2>
-
-            <p className="text-4xl font-bold mt-3">
-              2
-            </p>
-          </div>
-
-          <div className="border rounded-xl p-6 shadow">
-            <h2 className="text-lg font-semibold">
-              Audience Confusion
-            </h2>
-
-            <p className="text-4xl font-bold mt-3">
-              67%
-            </p>
-          </div>
-
-        </div>
+       </div>
       </main>
     </>
   );
