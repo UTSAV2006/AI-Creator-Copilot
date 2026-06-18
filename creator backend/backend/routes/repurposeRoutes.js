@@ -5,6 +5,7 @@ const {
   reviveContent,
 } = require("../controllers/revivalController");
 
+
 router.post("/", reviveContent);
 
 module.exports = router;

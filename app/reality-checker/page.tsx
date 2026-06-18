@@ -1,6 +1,39 @@
+"use client";
+
 import Navbar from "../../components/Navbar";
 
+import { useState } from "react";
+import api from "../../services/api";
+
 export default function RealityChecker() {
+  const [script, setScript] = useState("");
+  const [result, setResult] = useState<{
+    issues?: { type: string; text: string }[];
+    suggestions?: string[];
+  } | null>(null);
+  const [loading, setLoading] = useState(false);
+  const handleCheck = async () => {
+   try {
+     setLoading(true);
+
+     const response = await api.post(
+      "/api/reality-check",
+      {
+        script,
+      }
+    );
+
+    setResult(response.data);
+
+   } catch (error: any) {
+  console.log("FULL ERROR:");
+  console.log(error);
+  console.log(error.response);
+  console.log(error.response?.data);
+} finally {
+    setLoading(false);
+   }
+ };
   return (
     <>
       <Navbar />
@@ -15,13 +48,44 @@ export default function RealityChecker() {
         </p>
 
         <textarea
-          placeholder="Paste your script here..."
-          className="w-full h-40 p-4 rounded-xl bg-slate-900 border border-slate-800 text-white"
+         value={script}
+         onChange={(e) => setScript(e.target.value)}
+         placeholder="Paste your script"
+         className="w-full p-4 border rounded-lg"
         />
 
-        <button className="mt-4 bg-white text-black px-6 py-3 rounded-xl font-semibold hover:scale-105 transition">
+        <button 
+          onClick={handleCheck}
+          className="mt-4 bg-white text-black px-6 py-3 rounded-xl font-semibold hover:scale-105 transition"
+        >
+          {loading ? "Checking..." : "Run Reality Check"}
           Analyze Script
         </button>
+        {result && (
+         <div className="mt-6 border rounded-lg p-4">
+          <h2 className="font-bold mb-2">
+           Issues
+          </h2>
+
+         {result.issues?.map((issue: any, index: number) => (
+          <p key={index}>
+           {issue.type}: {issue.text}
+          </p>
+        ))}
+
+       <h2 className="font-bold mt-4 mb-2">
+       Suggestions
+       </h2>
+ 
+      {result.suggestions?.map(
+       (suggestion: string, index: number) => (
+         <p key={index}>
+          • {suggestion}
+         </p>
+       )
+     )}
+   </div>
+ )}
 
         {/* Results */}
 
