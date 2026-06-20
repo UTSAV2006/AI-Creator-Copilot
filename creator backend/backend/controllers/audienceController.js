@@ -1,15 +1,15 @@
 const AudienceAnalysis = require("../models/AudienceAnalysis");
+const analyzeAudienceAI = require("../services_smr/audienceAnalyzerService");
 
 const analyzeAudience = async (req, res) => {
   try {
     const { comments } = req.body;
 
-    const confusionScore = 72;
+    const aiResult = await analyzeAudienceAI(comments);
 
-    const suggestions = [
-      "Clarify introduction",
-      "Add examples",
-    ];
+    const confusionScore = aiResult.confusionScore || 0;
+
+    const suggestions = aiResult.suggestions || [];
 
     await AudienceAnalysis.create({
       comments,
