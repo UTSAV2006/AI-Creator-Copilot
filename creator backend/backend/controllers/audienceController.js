@@ -1,6 +1,6 @@
 const AudienceAnalysis = require("../models/AudienceAnalysis");
-const analyzeAudienceAI = require("../services_smr/audienceAnalyzerService");
-
+const analyzeAudienceAI =
+  require("../services/audienceAnalyzerService");
 const analyzeAudience = async (req, res) => {
   try {
     const { comments } = req.body;

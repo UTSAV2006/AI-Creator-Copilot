@@ -1,6 +1,38 @@
+"use client";
+
 import Navbar from "../../components/Navbar";
+import { useState } from "react";
+import api from "../../services/api";
 
 export default function Burnout() {
+  const [sleepHours, setSleepHours] = useState(5);
+  const [workHours, setWorkHours] = useState(12);
+  const [stressLevel, setStressLevel] = useState(8);
+  const [motivationLevel, setMotivationLevel] = useState(3);
+
+  const [burnoutScore, setBurnoutScore] = useState(0);
+  const [risk, setRisk] = useState("");
+
+  const handleAnalyze = async () => {
+    try {
+      const response = await api.post(
+        "/api/burnout/analyze",
+        {
+          sleepHours,
+          workHours,
+          stressLevel,
+          motivationLevel,
+        }
+      );
+
+      setBurnoutScore(response.data.burnoutScore);
+      setRisk(response.data.risk);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <>
       <Navbar />
@@ -10,9 +42,50 @@ export default function Burnout() {
           Burnout Risk Detection
         </h1>
 
-        <p className="text-slate-400 mb-8">
+        <p className="text-slate-400 mb-4">
           Analyze creator workload and predict burnout before it impacts growth.
         </p>
+
+        <div className="grid md:grid-cols-2 gap-4 mb-8">
+          <input
+            type="number"
+            value={sleepHours}
+            onChange={(e) => setSleepHours(Number(e.target.value))}
+            placeholder="Sleep Hours"
+            className="p-3 rounded bg-slate-900 border border-slate-700"
+          />
+
+          <input
+            type="number"
+            value={workHours}
+            onChange={(e) => setWorkHours(Number(e.target.value))}
+            placeholder="Work Hours"
+            className="p-3 rounded bg-slate-900 border border-slate-700"
+          />
+
+          <input
+            type="number"
+            value={stressLevel}
+            onChange={(e) => setStressLevel(Number(e.target.value))}
+            placeholder="Stress Level (1-10)"
+            className="p-3 rounded bg-slate-900 border border-slate-700"
+          />
+
+          <input
+            type="number"
+            value={motivationLevel}
+            onChange={(e) => setMotivationLevel(Number(e.target.value))}
+            placeholder="Motivation Level (1-10)"
+            className="p-3 rounded bg-slate-900 border border-slate-700"
+          />
+        </div>
+
+        <button
+          onClick={handleAnalyze}
+          className="bg-white text-black px-6 py-3 rounded-xl font-semibold mb-8"
+        >
+          Analyze Burnout
+        </button>
 
         <div className="grid md:grid-cols-3 gap-6 mb-8">
 
@@ -42,12 +115,11 @@ export default function Burnout() {
           </h2>
 
           <p className="text-6xl font-bold text-red-500 mb-4">
-            78%
+            {burnoutScore}%
           </p>
 
           <p className="text-slate-300">
-            High burnout probability detected based on workload,
-            posting frequency, and recovery time.
+            Burnout Risk Level: {risk}
           </p>
 
         </div>
